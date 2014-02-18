@@ -2,27 +2,37 @@ var inField = document.getElementById('in');
 var board = document.getElementById('board');
 var wordLength = 1;
 var input;
-var currentValue;
+var currentValue = '';
+var loopOn;
 
 function compare()
 {
     input = inField.value;
-    if( input != currentValue){
-    	return false;
+    if(input == currentValue[0]){
+        currentValue = currentValue.slice(1);
+        inField.value = '';
     }
-    step();
 }
 
 function init() {
-	step();
+    loop();
     inField.onkeyup = compare;
+}
+
+function loop()
+{
+    loopOn = setInterval(step,1000);
 }
 
 function step()
 {
-    inField.value = '';
-    currentValue = someValue();
+    currentValue = currentValue + someValue();
     board.value = currentValue;
+
+    if (currentValue.length >= 10) {
+        clearInterval(loopOn);
+        alert('PERDU !');
+    };
 }
 
 function someValue()
