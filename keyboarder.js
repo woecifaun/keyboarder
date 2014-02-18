@@ -2,26 +2,32 @@ var inField = document.getElementById('in');
 var board = document.getElementById('board');
 var wordLength = 1;
 var input;
-var currentValue = '';
+var currentValue;
 var loopOn;
+var speed = 2000;
+var score = 0;
 
 function compare()
 {
     input = inField.value;
     if(input == currentValue[0]){
         currentValue = currentValue.slice(1);
+        board.value = currentValue;
         inField.value = '';
+        score++;
     }
 }
 
 function init() {
+    currentValue = '';
     loop();
     inField.onkeyup = compare;
 }
 
 function loop()
 {
-    loopOn = setInterval(step,1000);
+    step();
+    loopOn = setInterval(step,speed);
 }
 
 function step()
@@ -31,7 +37,8 @@ function step()
 
     if (currentValue.length >= 10) {
         clearInterval(loopOn);
-        alert('PERDU !');
+        alert('Your score : '+score);
+        inField.onkeyup = init;
     };
 }
 
