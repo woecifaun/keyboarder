@@ -1,11 +1,19 @@
 var inField = document.getElementById('in');
 var board = document.getElementById('board');
+var speedSetting = document.getElementById('speedSetting');
 var wordLength = 1;
 var input;
 var currentValue;
 var loopOn;
 var speed = 2000;
 var score = 0;
+
+/* User settings */
+function setSpeed() {
+    speed = speedSetting.options[speedSetting.selectedIndex].value;
+}
+
+/* game loop */
 
 function compare()
 {
@@ -38,6 +46,7 @@ function step()
     if (currentValue.length >= 10) {
         clearInterval(loopOn);
         alert('Your score : '+score);
+        score = 0;
         inField.onkeyup = init;
     };
 }

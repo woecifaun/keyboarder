@@ -5,6 +5,20 @@
     <title>keyboarder</title>
 </head>
     <body>
+        <div>
+            <select id="speedSetting" onchange="setSpeed();">
+                <option value="2000">2000</option>
+                <option value="1800">1800</option>
+                <option value="1600">1600</option>
+                <option value="1400">1400</option>
+                <option value="1200">1200</option>
+                <option value="1000">1000</option>
+                <option value="800">800</option>
+                <option value="600">600</option>
+                <option value="400">400</option>
+                <option value="200">200</option>
+            </select>
+        </div>
         <input type="text" id="in" autofocus onkeyup="init()" />
         <input type="text" id="board"/>
         <script src="keyboarder.js"></script>
