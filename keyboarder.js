@@ -1,12 +1,22 @@
+//DOM Elements
 var inField = document.getElementById('in');
 var board = document.getElementById('board');
 var speedSetting = document.getElementById('speedSetting');
+
+//vars
 var wordLength = 1;
 var input;
 var currentValue;
 var loopOn;
 var speed = 2000;
 var score = 0;
+var characters = [];
+
+/* general */
+Array.prototype.rand = function()
+{
+    return this[Math.floor(Math.random() * this.length)];
+}
 
 /* User settings */
 function setSpeed() {
@@ -28,11 +38,19 @@ function compare()
 
 function init() {
     currentValue = '';
-    loop();
+    setCharacters();
+    console.log(characters);
+    startLoop();
     inField.onkeyup = compare;
 }
 
-function loop()
+function setCharacters() {
+    for (var prop in charsets) {
+        characters = characters.concat(charsets[prop].set);
+    }
+}
+
+function startLoop()
 {
     step();
     loopOn = setInterval(step,speed);
@@ -40,24 +58,19 @@ function loop()
 
 function step()
 {
-    currentValue = currentValue + someValue();
+    currentValue = currentValue + characters.rand();
     board.value = currentValue;
 
     if (currentValue.length >= 10) {
-        clearInterval(loopOn);
-        alert('Your score : '+score);
-        score = 0;
-        inField.onkeyup = init;
+        gameOver();
     };
 }
 
-function someValue()
-{
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < wordLength; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
+function gameOver() {
+    clearInterval(loopOn);
+    inField.blur();
+    alert('Your score : '+score);
+    score = 0;
+    inField.onkeyup = init;
+    // inField.focus();
 }

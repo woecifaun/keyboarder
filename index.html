@@ -5,7 +5,7 @@
     <title>keyboarder</title>
 </head>
     <body>
-        <div>
+        <fieldset>
             <select id="speedSetting" onchange="setSpeed();">
                 <option value="2000">2000</option>
                 <option value="1800">1800</option>
@@ -18,9 +18,10 @@
                 <option value="400">400</option>
                 <option value="200">200</option>
             </select>
-        </div>
+        </fieldset>
         <input type="text" id="in" autofocus onkeyup="init()" />
         <input type="text" id="board"/>
+        <script src="bepo.charsets.js"></script>
         <script src="keyboarder.js"></script>
     </body>
 </html>
