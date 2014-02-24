@@ -18,6 +18,23 @@ Array.prototype.rand = function()
     return this[Math.floor(Math.random() * this.length)];
 }
 
+/* Interface builder */
+function buildInterface() {
+    for (var prop in charsets) {
+        addCharactersChoice(prop,charsets[prop].label);
+    }
+}
+
+function addCharactersChoice(name, lbl){
+    var label = document.createElement('label');
+    label.appendChild(document.createTextNode(lbl));
+    var checkbox = document.createElement('input');
+    checkbox.name = name;
+    checkbox.type = 'checkbox';
+    label.appendChild(checkbox);
+    document.getElementsByTagName('fieldset')[0].appendChild(label);
+}
+
 /* User settings */
 function setSpeed() {
     speed = speedSetting.options[speedSetting.selectedIndex].value;
@@ -39,14 +56,20 @@ function compare()
 function init() {
     currentValue = '';
     setCharacters();
-    console.log(characters);
     startLoop();
     inField.onkeyup = compare;
 }
 
 function setCharacters() {
-    for (var prop in charsets) {
-        characters = characters.concat(charsets[prop].set);
+    var selectedCharacterSets = document.querySelectorAll('fieldset input');
+    for (var prop in selectedCharacterSets) {
+        var aCharset = selectedCharacterSets[prop];
+        if (aCharset.type != undefined && aCharset.type == 'checkbox'
+            && aCharset.checked
+            && charsets[aCharset.name] != undefined
+        ) {
+            characters = characters.concat(charsets[aCharset.name].set);
+        }
     }
 }
 
@@ -74,3 +97,6 @@ function gameOver() {
     inField.onkeyup = init;
     // inField.focus();
 }
+
+/* runtime */
+buildInterface();
