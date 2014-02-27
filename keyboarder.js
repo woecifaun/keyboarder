@@ -21,18 +21,32 @@ Array.prototype.rand = function()
 /* Interface builder */
 function buildInterface() {
     for (var prop in charsets) {
-        addCharactersChoice(prop,charsets[prop].label);
+        addCharactersChoice(prop,charsets[prop]);
     }
 }
 
-function addCharactersChoice(name, lbl){
-    var label = document.createElement('label');
-    label.appendChild(document.createTextNode(lbl));
-    var checkbox = document.createElement('input');
-    checkbox.name = name;
-    checkbox.type = 'checkbox';
-    label.appendChild(checkbox);
-    document.getElementsByTagName('fieldset')[0].appendChild(label);
+function addCharactersChoice(theName, theSet){
+    var btn = document.createElement('button');
+    btn.value = theName;
+    btn.className = 'btn charsetChoice';
+    if (theSet.activate) {
+        btn.classList.add('active');
+        btn.dataset.active = true;
+    };
+    btn.onclick = toggleChoice;
+    btn.appendChild(document.createTextNode(theSet.label));
+    document.getElementById('settings').appendChild(btn);
+}
+
+function toggleChoice(event) {
+    var elem = event.target;
+    if (elem.dataset.active != undefined && elem.dataset.active == 'true'){
+        elem.dataset.active = null;
+        elem.classList.remove('active');
+    } else {
+        elem.dataset.active = true;
+        elem.classList.add('active');
+    }
 }
 
 /* User settings */
@@ -61,14 +75,12 @@ function init() {
 }
 
 function setCharacters() {
-    var selectedCharacterSets = document.querySelectorAll('fieldset input');
+    characters = [];
+    var selectedCharacterSets = document.querySelectorAll('#settings button.active');
     for (var prop in selectedCharacterSets) {
-        var aCharset = selectedCharacterSets[prop];
-        if (aCharset.type != undefined && aCharset.type == 'checkbox'
-            && aCharset.checked
-            && charsets[aCharset.name] != undefined
-        ) {
-            characters = characters.concat(charsets[aCharset.name].set);
+        var button = selectedCharacterSets[prop];
+        if (button.value != undefined) {
+            characters = characters.concat(charsets[button.value].set);
         }
     }
 }

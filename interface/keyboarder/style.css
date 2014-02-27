@@ -1,0 +1,16 @@
+#arena {
+    text-align: center;
+    margin-top: 3em;
+}
+
+#arena input {
+    font-size: 5em;
+}
+#in {
+    width: 1em;
+    text-align: center;
+}
+
+#board {
+    text-align: right;
+}
