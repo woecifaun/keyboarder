@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="container" id="arena">
-            <input type="text" id="in" autofocus onkeyup="init()" />
+            <input type="text" id="in" />
             <input type="text" id="board"/>
         </div>
         <script src="interface/jquery/dist/jquery.min.js"></script>
@@ -33,6 +33,7 @@
         <script src="keyboarder.js"></script>
         <script type="text/javascript">
             /* runtime */
+            document.body.onkeyup = init;
             buildInterface();
         </script>
     </body>

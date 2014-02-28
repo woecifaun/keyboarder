@@ -55,11 +55,18 @@ function setSpeed() {
 }
 
 /* init */
-function init() {
+function init(event) {
+    //on enter pressed, start game
+    if (event.which != 13) {
+        return false;
+    }
+    document.body.onkeyup = null;
+
+    inField.value = '';
+    inField.onkeyup = compare;
     currentValue = '';
     setCharacters();
     startLoop();
-    inField.onkeyup = compare;
 }
 
 function setCharacters() {
@@ -101,6 +108,9 @@ function step()
     if (currentValue.length >= 10) {
         gameOver();
     };
+
+    //keeps input listener active (even with tab key pressed)
+    inField.focus();
 }
 
 function gameOver() {
@@ -108,6 +118,5 @@ function gameOver() {
     inField.blur();
     alert('Your score : '+score);
     score = 0;
-    inField.onkeyup = init;
-    // inField.focus();
+    document.body.onkeyup = init;
 }
