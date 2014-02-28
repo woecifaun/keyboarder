@@ -54,19 +54,7 @@ function setSpeed() {
     speed = speedSetting.options[speedSetting.selectedIndex].value;
 }
 
-/* game loop */
-
-function compare()
-{
-    input = inField.value;
-    if(input == currentValue[0]){
-        currentValue = currentValue.slice(1);
-        board.value = currentValue;
-        inField.value = '';
-        score++;
-    }
-}
-
+/* init */
 function init() {
     currentValue = '';
     setCharacters();
@@ -82,6 +70,20 @@ function setCharacters() {
         if (button.value != undefined) {
             characters = characters.concat(charsets[button.value].set);
         }
+    }
+}
+
+
+/* game loop */
+
+function compare()
+{
+    input = inField.value;
+    if(input == currentValue[0]){
+        currentValue = currentValue.slice(1);
+        board.value = currentValue;
+        inField.value = '';
+        score++;
     }
 }
 
@@ -109,6 +111,3 @@ function gameOver() {
     inField.onkeyup = init;
     // inField.focus();
 }
-
-/* runtime */
-buildInterface();
