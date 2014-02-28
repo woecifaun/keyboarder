@@ -83,8 +83,15 @@ function setCharacters() {
 
 /* game loop */
 
-function compare()
+function compare(event)
 {
+    //on escape, abort game
+    if (event.which == 27) {
+        gameOver();
+        inField.value = '';
+        return false;
+    }
+
     input = inField.value;
     if(input == currentValue[0]){
         currentValue = currentValue.slice(1);
