@@ -2,6 +2,7 @@
 var inField = document.getElementById('in');
 var board = document.getElementById('board');
 var speedSetting = document.getElementById('speedSetting');
+var scoreBoard = document.getElementById('scoreBoard');
 
 //vars
 var wordLength = 1;
@@ -66,6 +67,7 @@ function init(event) {
     inField.onkeyup = compare;
     currentValue = '';
     setCharacters();
+    scoreBoard.innerHTML = '0';
     startLoop();
 }
 
@@ -98,6 +100,7 @@ function compare(event)
         board.value = currentValue;
         inField.value = '';
         score++;
+        scoreBoard.innerHTML = score;
     }
 }
 

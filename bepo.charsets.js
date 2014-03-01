@@ -11,7 +11,7 @@ var charsets = {
     },
     ponctuation: {
         label: 'ponctuation',
-        activate: false,
+        activate: true,
         set: ['.',',',':',';','"','!','?',' ',"'",'…']
     },
     numbers: {
