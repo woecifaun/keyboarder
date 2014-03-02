@@ -1,16 +1,47 @@
 #arena {
     text-align: center;
     margin-top: 3em;
+    position: relative;
+    height: 5em;
 }
 
 #arena input {
-    font-size: 5em;
+    font-size: 3em;
 }
 #in {
     width: 1em;
     text-align: center;
+    position: absolute;
+    left: 0;
+
 }
 
 #board {
     text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#rails {
+    font-size: 3em;
+    width: 100%;
+    text-align: right;
+    position: absolute;
+    top: 0;
+}
+
+.wagon {
+    float: right;
+    background: purple;
+    color: white;
+    width: 1em;
+    margin-right: 10px;
+    border-radius: 3px;
+    text-align: center;
+    padding: 0;
+}
+
+.wagon.invisibleChar {
+    color: purple;
 }

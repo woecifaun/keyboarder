@@ -3,6 +3,7 @@ var inField = document.getElementById('in');
 var board = document.getElementById('board');
 var speedSetting = document.getElementById('speedSetting');
 var scoreBoard = document.getElementById('scoreBoard');
+var rails = document.getElementById('rails');
 
 //vars
 var wordLength = 1;
@@ -65,6 +66,9 @@ function init(event) {
 
     inField.value = '';
     inField.onkeyup = compare;
+    while (rails.lastChild) {
+        rails.removeChild(rails.lastChild);
+    }
     currentValue = '';
     setCharacters();
     scoreBoard.innerHTML = '0';
@@ -98,6 +102,7 @@ function compare(event)
     if(input == currentValue[0]){
         currentValue = currentValue.slice(1);
         board.value = currentValue;
+        rails.removeChild(rails.lastChild);
         inField.value = '';
         score++;
         scoreBoard.innerHTML = score;
@@ -112,8 +117,14 @@ function startLoop()
 
 function step()
 {
-    currentValue = currentValue + characters.rand();
+    //test
+    console.log(rails.firstChild);
+
+    var newChar = characters.rand();
+    currentValue = currentValue + newChar;
     board.value = currentValue;
+
+    addWagonOnRails(newChar);
 
     if (currentValue.length >= 10) {
         gameOver();
@@ -121,6 +132,20 @@ function step()
 
     //keeps input listener active (even with tab key pressed)
     inField.focus();
+}
+
+function addWagonOnRails(char) {
+    var wagon = document.createElement('span');
+    wagon.className = 'wagon';
+    wagon.dataset.compare = char;
+
+    //case of space character
+    if (char == ' '){
+        char = '_';
+        wagon.classList.add('invisibleChar');
+    };
+    wagon.appendChild(document.createTextNode(char));
+    rails.insertBefore(wagon, rails.firstChild);
 }
 
 function gameOver() {
