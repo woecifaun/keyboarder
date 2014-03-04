@@ -135,16 +135,11 @@ function step()
 }
 
 function addWagonOnRails(char) {
-    var wagon = document.createElement('span');
+    var wagon = document.createElement('div');
     wagon.className = 'wagon';
     wagon.dataset.compare = char;
-
-    //case of space character
-    if (char == ' '){
-        char = '_';
-        wagon.classList.add('invisibleChar');
-    };
     wagon.appendChild(document.createTextNode(char));
+
     rails.insertBefore(wagon, rails.firstChild);
 }
 
