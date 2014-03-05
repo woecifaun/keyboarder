@@ -3,10 +3,10 @@
     margin-top: 3em;
     position: relative;
     height: 80px;
-    width: 900px;
+    width: 880px;
     line-height: 80px;
     font-size: 40px;
-    outline: solid red 1px;
+    box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.3) inset;
 }
 
 #in {
@@ -15,6 +15,10 @@
     left: 0;
     width: 80px;
     height: 80px;
+    border-style: dotted;
+    border-width: 0 2px 0 0;
+    border-color: gray;
+    background-color: transparent;
 }
 
 #board {
@@ -33,16 +37,29 @@
 
 .wagon {
     float: right;
-    background: purple;
+    background: #66ff00;
     color: white;
+    text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.4);
     width: 80px;
     height: 80px;
-    margin-right: 1px;
+    margin-left: 1px;
     border-radius: 5px;
     text-align: center;
     padding: 0;
 }
 
-.wagon.invisibleChar {
-    color: purple;
+.wagon:nth-child(6) {
+    background-color: #aaff00;
+}
+.wagon:nth-child(7) {
+    background-color: #ccff00;
+}
+.wagon:nth-child(8) {
+    background-color: #ffdd00;
+}
+.wagon:nth-child(9) {
+    background-color: #ffaa00;
+}
+.wagon:nth-child(10) {
+    background-color: #ff0000;
 }
