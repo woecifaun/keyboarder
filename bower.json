@@ -1,0 +1,6 @@
+{
+  "name": "woecifaun/keyboarder",
+  "dependencies": {
+    "seiyria-bootstrap-slider": "master"
+  }
+}
