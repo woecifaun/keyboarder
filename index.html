@@ -3,24 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>keyboarder</title>
-    <link href="interface/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" rel="stylesheet">
     <link href="interface/style.css" rel="stylesheet">
 </head>
     <body>
         <div class="navbar-wrapper">
             <div class="container" id="settings">
-                <select id="speedSetting" onchange="setSpeed();">
-                    <option value="2000">2000</option>
-                    <option value="1800">1800</option>
-                    <option value="1600">1600</option>
-                    <option value="1400">1400</option>
-                    <option value="1200">1200</option>
-                    <option value="1000">1000</option>
-                    <option value="800">800</option>
-                    <option value="600">600</option>
-                    <option value="400">400</option>
-                    <option value="200">200</option>
-                </select>
+                <input id="strokesPerMinute" data-slider-id='ex1Slider' type="text" data-slider-step="1" />
             </div>
         </div>
         <div class="container" id="arena">
@@ -31,14 +21,21 @@
         <div class="container">
             <div>score : <span id="scoreBoard"></span></div>
         </div>
-        <script src="interface/jquery/dist/jquery.min.js"></script>
-        <script src="interface/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
         <script src="bepo.charsets.js"></script>
         <script src="keyboarder.js"></script>
         <script type="text/javascript">
             /* runtime */
             document.body.onkeyup = init;
             buildInterface();
+            $('#strokesPerMinute').slider({
+                min: minSpeed,
+                max: maxSpeed,
+                value: defaultSpeed,
+                tooltip: 'always'
+            }).on('slideStop', setSpeed);
         </script>
     </body>
 </html>

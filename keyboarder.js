@@ -1,16 +1,21 @@
+/* Settings */
+var minSpeed = 10;      //in strokes/mn
+var maxSpeed = 200;     //in strokes/mn
+var defaultSpeed = 100; //in strokes/mn
+
 //DOM Elements
 var inField = document.getElementById('in');
 var board = document.getElementById('board');
-var speedSetting = document.getElementById('speedSetting');
 var scoreBoard = document.getElementById('scoreBoard');
 var rails = document.getElementById('rails');
 
 //vars
+var speed; //current flow speed in strokes/mn
+var ms; //game loop interval milliseconds
 var wordLength = 1;
 var input;
 var currentValue;
 var loopOn;
-var speed = 2000;
 var score = 0;
 var characters = [];
 
@@ -18,6 +23,13 @@ var characters = [];
 Array.prototype.rand = function()
 {
     return this[Math.floor(Math.random() * this.length)];
+}
+/**
+ * spm : speed in strokes per minutes
+ */
+function strokesToSpeed(spm) {
+    ms = Math.round(60000/spm);
+    alert(ms);
 }
 
 /* Interface builder */
@@ -52,8 +64,8 @@ function toggleChoice(event) {
 }
 
 /* User settings */
-function setSpeed() {
-    speed = speedSetting.options[speedSetting.selectedIndex].value;
+function setSpeed(event) {
+    strokesToSpeed(event.target.value);
 }
 
 /* init */
@@ -86,7 +98,6 @@ function setCharacters() {
     }
 }
 
-
 /* game loop */
 
 function compare(event)
@@ -112,7 +123,7 @@ function compare(event)
 function startLoop()
 {
     step();
-    loopOn = setInterval(step,speed);
+    loopOn = setInterval(step,ms);
 }
 
 function step()
