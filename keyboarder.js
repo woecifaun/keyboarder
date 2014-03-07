@@ -2,6 +2,7 @@
 var minSpeed = 10;      //in strokes/mn
 var maxSpeed = 200;     //in strokes/mn
 var defaultSpeed = 100; //in strokes/mn
+var sameSpeedWagons = 5;   //number of wagon before increasing speed
 
 //DOM Elements
 var inField = document.getElementById('in');
@@ -10,6 +11,7 @@ var scoreBoard = document.getElementById('scoreBoard');
 var rails = document.getElementById('rails');
 
 //vars
+var userSpeed;
 var speed; //current flow speed in strokes/mn
 var ms; //game loop interval milliseconds
 var wordLength = 1;
@@ -18,6 +20,7 @@ var currentValue;
 var loopOn;
 var score = 0;
 var characters = [];
+var wagonsInARow = 0;
 
 /* general */
 Array.prototype.rand = function()
@@ -27,9 +30,8 @@ Array.prototype.rand = function()
 /**
  * spm : speed in strokes per minutes
  */
-function strokesToSpeed(spm) {
+function speedToMs(spm) {
     ms = Math.round(60000/spm);
-    alert(ms);
 }
 
 /* Interface builder */
@@ -64,8 +66,8 @@ function toggleChoice(event) {
 }
 
 /* User settings */
-function setSpeed(event) {
-    strokesToSpeed(event.target.value);
+function setUserSpeed(event) {
+    userSpeed = parseInt(event.target.value);
 }
 
 /* init */
@@ -76,6 +78,9 @@ function init(event) {
     }
     document.body.onkeyup = null;
 
+    speed = userSpeed;
+    speedToMs(speed);
+    $('#strokesPerMinute').slider('setValue',userSpeed);
     inField.value = '';
     inField.onkeyup = compare;
     while (rails.lastChild) {
@@ -83,8 +88,9 @@ function init(event) {
     }
     currentValue = '';
     setCharacters();
+    score = 0;
     scoreBoard.innerHTML = '0';
-    startLoop();
+    step();
 }
 
 function setCharacters() {
@@ -99,6 +105,25 @@ function setCharacters() {
 }
 
 /* game loop */
+
+function step()
+{
+    var newChar = characters.rand();
+    currentValue = currentValue + newChar;
+    board.value = currentValue;
+
+    addWagonOnRails(newChar);
+
+    updateSpeed();
+    loopOn = setTimeout(step,ms);
+
+    if (currentValue.length >= 10) {
+        gameOver();
+    };
+
+    //keeps input listener active (even with tab key pressed)
+    inField.focus();
+}
 
 function compare(event)
 {
@@ -120,29 +145,14 @@ function compare(event)
     }
 }
 
-function startLoop()
-{
-    step();
-    loopOn = setInterval(step,ms);
-}
-
-function step()
-{
-    //test
-    console.log(rails.firstChild);
-
-    var newChar = characters.rand();
-    currentValue = currentValue + newChar;
-    board.value = currentValue;
-
-    addWagonOnRails(newChar);
-
-    if (currentValue.length >= 10) {
-        gameOver();
+function updateSpeed() {
+    wagonsInARow++;
+    if (wagonsInARow >= sameSpeedWagons) {
+        speed++;
+        speedToMs(speed);
+        wagonsInARow = 0;
+        $('#strokesPerMinute').slider('setValue',speed);
     };
-
-    //keeps input listener active (even with tab key pressed)
-    inField.focus();
 }
 
 function addWagonOnRails(char) {
@@ -155,9 +165,9 @@ function addWagonOnRails(char) {
 }
 
 function gameOver() {
-    clearInterval(loopOn);
+    clearTimeout(loopOn);
     inField.blur();
-    alert('Your score : '+score);
-    score = 0;
+    alert('Your score : '+score+"\n Your speed : "+speed+'strokes/mn');
     document.body.onkeyup = init;
+
 }

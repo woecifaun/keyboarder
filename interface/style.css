@@ -2,6 +2,10 @@
     margin-top: 3em;
 }
 
+.slider.slider-horizontal {
+    width: 400px;
+}
+
 #arena {
     text-align: center;
     margin-top: 3em;
