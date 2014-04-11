@@ -2,11 +2,10 @@
 var minSpeed = 10;      //in strokes/mn
 var maxSpeed = 200;     //in strokes/mn
 var defaultSpeed = 100; //in strokes/mn
-var sameSpeedWagons = 5;   //number of wagon before increasing speed
+var sameSpeedCars = 5;   //number of cars before increasing speed
 
 //DOM Elements
 var inField = document.getElementById('in');
-var board = document.getElementById('board');
 var scoreBoard = document.getElementById('scoreBoard');
 var rails = document.getElementById('rails');
 
@@ -16,11 +15,11 @@ var speed; //current flow speed in strokes/mn
 var ms; //game loop interval milliseconds
 var wordLength = 1;
 var input;
-var train; //array of wagon (ie different values to match)
+var train; //array of cars (ie different values to match)
 var loopOn;
 var score = 0;
 var characters = [];
-var wagonsInARow = 0;
+var carsInARow = 0;
 
 /* general */
 Array.prototype.rand = function()
@@ -108,14 +107,13 @@ function setCharacters() {
 
 function step()
 {
-    var newChar = characters.rand();
-    train.push(newChar);
-console.log(train);
-
-    addWagonOnRails(newChar);
+    var newCar = characters.rand();
+    train.push(newCar); //record data flow
+    addCarOnRails(newCar); //on screen data flow
 
     updateSpeed();
-    loopOn = setTimeout(step,ms);
+    //laps is relative to cars numbers of characters
+    loopOn = setTimeout(step, newCar.length*ms);
 
     if (train.length >= 10) {
         gameOver();
@@ -145,22 +143,22 @@ function compare(event)
 }
 
 function updateSpeed() {
-    wagonsInARow++;
-    if (wagonsInARow >= sameSpeedWagons) {
+    carsInARow++;
+    if (carsInARow >= sameSpeedCars) {
         speed++;
         speedToMs(speed);
-        wagonsInARow = 0;
+        carsInARow = 0;
         $('#strokesPerMinute').slider('setValue',speed);
     };
 }
 
-function addWagonOnRails(char) {
-    var wagon = document.createElement('div');
-    wagon.className = 'wagon';
-    wagon.dataset.compare = char;
-    wagon.appendChild(document.createTextNode(char));
+function addCarOnRails(char) {
+    var car = document.createElement('div');
+    car.className = 'wagon';
+    car.dataset.compare = char;
+    car.appendChild(document.createTextNode(char));
 
-    rails.insertBefore(wagon, rails.firstChild);
+    rails.insertBefore(car, rails.firstChild);
 }
 
 function gameOver() {
