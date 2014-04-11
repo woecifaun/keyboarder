@@ -16,7 +16,7 @@ var speed; //current flow speed in strokes/mn
 var ms; //game loop interval milliseconds
 var wordLength = 1;
 var input;
-var currentValue;
+var train; //array of wagon (ie different values to match)
 var loopOn;
 var score = 0;
 var characters = [];
@@ -86,7 +86,7 @@ function init(event) {
     while (rails.lastChild) {
         rails.removeChild(rails.lastChild);
     }
-    currentValue = '';
+    train = [];
     setCharacters();
     score = 0;
     scoreBoard.innerHTML = '0';
@@ -109,15 +109,15 @@ function setCharacters() {
 function step()
 {
     var newChar = characters.rand();
-    currentValue = currentValue + newChar;
-    board.value = currentValue;
+    train.push(newChar);
+console.log(train);
 
     addWagonOnRails(newChar);
 
     updateSpeed();
     loopOn = setTimeout(step,ms);
 
-    if (currentValue.length >= 10) {
+    if (train.length >= 10) {
         gameOver();
     };
 
@@ -135,9 +135,8 @@ function compare(event)
     }
 
     input = inField.value;
-    if(input == currentValue[0]){
-        currentValue = currentValue.slice(1);
-        board.value = currentValue;
+    if(input == train[0]){
+        train.shift();
         rails.removeChild(rails.lastChild);
         inField.value = '';
         score++;
