@@ -137,7 +137,7 @@ function compare(event)
         train.shift();
         rails.removeChild(rails.lastChild);
         inField.value = '';
-        score++;
+        score = score + speed;
         scoreBoard.innerHTML = score;
     }
 }
@@ -164,7 +164,9 @@ function addCarOnRails(char) {
 function gameOver() {
     clearTimeout(loopOn);
     inField.blur();
-    alert('Your score : '+score+"\n Your speed : "+speed+'strokes/mn');
+    //bonus starting higher level
+    score += userSpeed*sameSpeedCars;
+    alert('Your score : '+score+"\n Your speed : "+speed+' strokes/mn');
     document.body.onkeyup = init;
 
 }
